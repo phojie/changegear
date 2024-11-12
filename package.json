@@ -1,8 +1,8 @@
 {
-  "name": "changelogen",
-  "version": "0.5.7",
+  "name": "changegear",
+  "version": "1.1.0",
   "description": "Generate Beautiful Changelogs using Conventional Commits",
-  "repository": "unjs/changelogen",
+  "repository": "phojie/changegear",
   "license": "MIT",
   "sideEffects": false,
   "type": "module",
@@ -14,7 +14,7 @@
     }
   },
   "bin": {
-    "changelogen": "./dist/cli.mjs"
+    "changegear": "./dist/cli.mjs"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -24,12 +24,13 @@
   ],
   "scripts": {
     "build": "unbuild",
-    "changelogen": "jiti ./src/cli.ts",
+    "changegear": "jiti ./src/cli.ts",
     "dev": "vitest dev",
-    "lint": "eslint . && prettier -c src test",
-    "lint:fix": "eslint --fix . && prettier -w src test",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepare": "npx simple-git-hooks",
     "prepack": "unbuild",
-    "release": "pnpm test && pnpm changelogen --release --push && pnpm publish",
+    "release": "pnpm test && pnpm changegear --release --push && pnpm publish",
     "test": "pnpm lint && vitest run --coverage"
   },
   "dependencies": {
@@ -56,10 +57,22 @@
     "eslint-config-unjs": "^0.4.1",
     "jiti": "^2.4.0",
     "prettier": "^3.3.3",
+    "@antfu/eslint-config": "^2.1.0",
+    "lint-staged": "^15.1.0",
+    "simple-git-hooks": "^2.9.0",
     "standard-version": "^9.5.0",
     "typescript": "^5.6.3",
     "unbuild": "^2.0.0",
     "vitest": "^2.1.4"
   },
-  "packageManager": "pnpm@9.12.3"
+  "packageManager": "pnpm@8.10.5",
+  "publishConfig": {
+    "access": "public"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
 }

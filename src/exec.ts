@@ -1,5 +1,11 @@
-import { execSync } from "node:child_process";
+import type { Options } from 'execa'
 
-export function execCommand(cmd: string, cwd?: string) {
-  return execSync(cmd, { encoding: "utf8", cwd }).trim();
+export async function execCommand(
+  cmd: string,
+  args: string[],
+  options?: Options<string>,
+) {
+  const { execa } = await import('execa')
+  const res = await execa(cmd, args, options)
+  return res.stdout
 }
